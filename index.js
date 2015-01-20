@@ -9,7 +9,7 @@ module.exports.eval = safeEval
 module.exports.FunctionFactory = FunctionFactory
 module.exports.Function = FunctionFactory()
 
-var maxIterations = 1000000
+module.exports.maxIterations = 1000000
 
 // 'eval' with a controlled environment
 function safeEval(src, parentContext){
@@ -164,7 +164,7 @@ function evaluateAst(tree, context){
         }
 
       case 'ForStatement':
-        var infinite = InfiniteChecker(maxIterations)
+        var infinite = InfiniteChecker(module.exports.maxIterations)
         var result = undefined
 
         enterBlock() // allow lets on delarations
@@ -185,7 +185,7 @@ function evaluateAst(tree, context){
         return result
 
       case 'ForInStatement':
-        var infinite = InfiniteChecker(maxIterations)
+        var infinite = InfiniteChecker(module.exports.maxIterations)
         var result = undefined
 
         var value = walk(node.right)
@@ -221,7 +221,7 @@ function evaluateAst(tree, context){
         return result
 
       case 'WhileStatement':
-        var infinite = InfiniteChecker(maxIterations)
+        var infinite = InfiniteChecker(module.exports.maxIterations)
         while (walk(node.test)){
           walk(node.body)
           infinite.check()
